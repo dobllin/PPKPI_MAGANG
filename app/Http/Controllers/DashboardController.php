@@ -1,6 +1,5 @@
 <?php
-// Simpan file ini di: app/Http/Controllers/DashboardController.php
-// (INI PUBLIK, tidak butuh login — beda dari Admin\DashboardController)
+// Simpan file ini di: app/Http/Controllers/DashboardController.php (TIMPA yang lama)
 
 namespace App\Http\Controllers;
 

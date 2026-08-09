@@ -1,62 +1,73 @@
+<!-- Simpan file ini di: resources/views/admin/layouts/app.blade.php (TIMPA yang lama) -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Super Admin') - SIMPEL PPKPI</title>
+    <title>@yield('title', 'Admin') - SIMPEL PPKPI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
-        body { background:#f4f6f9; }
-        .sidebar { min-height: 100vh; background: #1e2a38; width: 240px; }
-        .sidebar a { color: #c9d3dc; text-decoration: none; display: block; padding: .65rem 1.25rem; font-size: .93rem; }
-        .sidebar a:hover, .sidebar a.active { background: #2c3e50; color: #fff; }
-        .sidebar .brand { color: #fff; font-weight: 600; padding: 1rem 1.25rem; border-bottom: 1px solid #2c3e50; }
-        .main-content { flex: 1; }
-        .topbar { background: #fff; border-bottom: 1px solid #e3e6ea; }
-        .card-stat h3 { font-weight: 700; }
+        body { background:#f4f6f9; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .navbar-top { background:#faf1e2; padding: 1rem 2.5rem; }
+        .navbar-top .nav-link { color:#1a1f36; font-weight:600; }
+        .navbar-top .nav-link.active { color:#2f5bff; }
+        .btn-nav-accent {
+            background:#f0ad33; border:2px solid #1a1f36; color:#1a1f36; font-weight:700;
+            border-radius:8px; padding: .5rem 1.25rem;
+        }
+        .btn-nav-accent:hover { background:#dd9c22; color:#1a1f36; }
+        .page-header {
+            background: linear-gradient(160deg, #1741e6 0%, #2f5bff 60%, #3f5fe0 100%);
+            border-radius: 18px;
+            padding: 2.5rem;
+            color: #fff;
+            margin: 1.5rem 2.5rem 0;
+        }
+        .card-stat { border-radius: 14px; border:none; }
+        .card-stat h3 { font-weight: 800; }
     </style>
 </head>
 <body>
-<div class="d-flex">
-    <div class="sidebar">
-        <div class="brand"><i class="bi bi-shield-lock me-1"></i> SIMPEL PPKPI</div>
-        <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <i class="bi bi-speedometer2 me-2"></i> Dashboard
-        </a>
-        <hr class="text-secondary mx-3">
-        <form action="{{ route('admin.logout') }}" method="POST">
+
+<nav class="navbar navbar-top d-flex justify-content-between align-items-center">
+    <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
+        <span class="d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#f0ad33;border:2px solid #1a1f36;border-radius:8px;font-weight:800;color:#1a1f36;">P</span>
+        <span class="fw-bold text-dark">PPKPI Admin</span>
+    </a>
+    <div class="d-flex gap-4 align-items-center">
+        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+        <span class="fw-semibold text-dark"><i class="bi bi-person-circle me-1"></i>{{ auth()->user()->nama_lengkap ?? auth()->user()->name ?? 'Admin' }}</span>
+        <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
             @csrf
-            <button type="submit" class="btn btn-link text-danger w-100 text-start" style="padding: .65rem 1.25rem; text-decoration:none;">
-                <i class="bi bi-box-arrow-right me-2"></i> Logout
-            </button>
+            <button type="submit" class="btn-nav-accent">Keluar</button>
         </form>
     </div>
+</nav>
 
-    <div class="main-content">
-        <nav class="topbar d-flex justify-content-between align-items-center px-4 py-3">
-            <h5 class="mb-0">@yield('title', 'Dashboard')</h5>
-            <span class="text-muted small">
-                <i class="bi bi-person-circle me-1"></i> {{ auth()->user()->nama_lengkap ?? 'Admin' }}
-            </span>
-        </nav>
+<div class="container-fluid px-0">
+    <div class="page-header">
+        <h3 class="fw-bold mb-1">@yield('title', 'Dashboard')</h3>
+        <p class="mb-0" style="opacity:.85;">Kelola seluruh data SIMPEL PPKPI dari sini.</p>
+    </div>
 
-        <div class="p-4">
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+    <div class="p-4 px-5">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
 </div>
 

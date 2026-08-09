@@ -92,7 +92,7 @@
     </div>
     <div class="d-flex align-items-center gap-3">
         @auth
-            <a href="{{ route('profile.index') }}" class="nav-link">{{ $user->nama_lengkap ?? auth()->user()->nama_lengkap }}</a>
+            <a href="{{ route('profile.index') }}" class="nav-link">{{ auth()->user()->nama_lengkap }}</a>
             <form action="{{ route('logout') }}" method="POST" class="m-0">
                 @csrf
                 <button type="submit" class="btn btn-daftar-nav btn-sm">Keluar</button>
@@ -205,4 +205,4 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> Summer vaccine region parks, especially the really cool taggers, especially ring booster. No ways of free stuff to claim. Don't mind if I do. Bright in, I'm back. Wait, go to a different gate. F plus, we've leveled up in more ways than one. I guess we need some more magic. power if you wanna be one shiny with that question is though how would I'm you just make me for real nice peasant sword upgraded from wood to peasant I'll take it I'm back seven hunter again four months follow me ow that how it might feel hundred power I'm not powerful enough
+</html>
