@@ -1,5 +1,5 @@
 <?php
-// Simpan file ini di: app/Http/Controllers/Auth/AdminAuthController.php
+// TIMPA isi file: app/Http/Controllers/Auth/AdminAuthController.php
 
 namespace App\Http\Controllers\Auth;
 
@@ -11,8 +11,7 @@ class AdminAuthController extends Controller
 {
     public function showLoginForm()
     {
-        // Kalau udah login sebagai super admin, langsung lempar ke dashboard
-        if (Auth::check() && Auth::user()->role === 'super_admin') {
+        if (Auth::check() && Auth::user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
@@ -29,10 +28,10 @@ class AdminAuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role !== 'super_admin') {
+            if (Auth::user()->role !== 'admin') {
                 Auth::logout();
                 return back()->withErrors([
-                    'email' => 'Akun ini bukan Super Admin.',
+                    'email' => 'Akun ini bukan Admin.',
                 ])->onlyInput('email');
             }
 

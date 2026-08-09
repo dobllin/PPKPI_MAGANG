@@ -1,27 +1,30 @@
 <?php
+// Ganti isi file app/Models/User.php lu dengan ini (timpa semua isinya)
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     protected $fillable = [
+        'name',
         'email',
-        'no_hp',
         'password',
         'role',
+        'nis',
         'nama_lengkap',
-        'male',
-        'photo',
-        'married',
-        'pendidikan',
-        'tgl_lahir',
+        'jenis_kelamin',
+        'tanggal_lahir',
+        'alamat',
+        'no_hp',
+        'foto',
+        'status',
     ];
 
     protected $hidden = [
@@ -34,41 +37,6 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'male' => 'boolean',
-            'married' => 'boolean',
-            'tgl_lahir' => 'date',
         ];
-    }
-
-    // === RELATIONS ===
-    public function instruktur()
-    {
-        return $this->hasOne(Instruktur::class, 'id_user');
-    }
-
-    public function progresses()
-    {
-        return $this->hasMany(Progress::class, 'id_user');
-    }
-
-    public function penilaians()
-    {
-        return $this->hasMany(Penilaian::class, 'id_user');
-    }
-
-    // === HELPER METHODS ===
-    public function isAdmin()
-    {
-        return $this->role === 'admin';
-    }
-
-    public function isInstruktur()
-    {
-        return $this->role === 'instruktur';
-    }
-
-    public function isPeserta()
-    {
-        return $this->role === 'peserta';
     }
 }

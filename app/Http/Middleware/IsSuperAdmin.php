@@ -1,4 +1,5 @@
 <?php
+// TIMPA isi file: app/Http/Middleware/IsSuperAdmin.php
 
 namespace App\Http\Middleware;
 
@@ -10,8 +11,8 @@ class IsSuperAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || Auth::user()->role !== 'super_admin') {
-            abort(403, 'Akses ditolak. Halaman ini khusus Super Admin.');
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            abort(403, 'Akses ditolak. Halaman ini khusus Admin.');
         }
 
         return $next($request);
