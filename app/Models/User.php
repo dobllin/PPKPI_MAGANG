@@ -39,4 +39,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function instruktur()
+{
+    return $this->hasOne(Instruktur::class, 'id_user');
+}
 }

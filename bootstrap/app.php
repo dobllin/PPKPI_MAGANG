@@ -10,11 +10,12 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'is_super_admin' => \App\Http\Middleware\IsSuperAdmin::class,
-        ]);
-    })
+  ->withMiddleware(function (Middleware $middleware): void {
+    $middleware->alias([
+        'is_super_admin' => \App\Http\Middleware\IsSuperAdmin::class,
+        'is_instruktur' => \App\Http\Middleware\IsInstruktur::class,
+    ]);
+})
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

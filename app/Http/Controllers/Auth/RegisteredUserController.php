@@ -56,27 +56,26 @@ class RegisteredUserController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email'    => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+{
+    $credentials = $request->validate([
+        'email'    => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
+    if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $request->session()->regenerate();
 
-            // Kalau yang login ternyata super_admin, arahkan ke dashboard admin
-            if (Auth::user()->role === 'super_admin') {
-                return redirect()->intended(route('admin.dashboard'));
-            }
-
-            return redirect()->intended(route('profile.index'));
-        }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        return match (Auth::user()->role) {
+            'admin'      => redirect()->intended(route('admin.dashboard')),
+            'instruktur' => redirect()->intended(route('instruktur.dashboard')),
+            default      => redirect()->intended(route('profile.index')),
+        };
     }
+
+    return back()->withErrors([
+        'email' => 'Email atau password salah.',
+    ])->onlyInput('email');
+}
 
     // ===== LOGOUT =====
     public function logout(Request $request)

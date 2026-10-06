@@ -26,6 +26,16 @@
         }
         .card-stat { border-radius: 14px; border:none; }
         .card-stat h3 { font-weight: 800; }
+        .admin-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #2f5bff; color:#fff; display:flex; align-items:center; justify-content:center;
+            font-weight:700; font-size:.95rem; flex-shrink:0;
+        }
+        .admin-name-block { line-height: 1.15; }
+        .admin-name-block .name { font-weight: 700; color:#1a1f36; font-size:.9rem; }
+        .admin-name-block .role-label {
+            font-size: .72rem; color:#6b7280; text-transform: uppercase; letter-spacing: .03em;
+        }
     </style>
 </head>
 <body>
@@ -39,7 +49,17 @@
         <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
     </div>
     <div class="d-flex align-items-center gap-3">
-        <span class="fw-semibold text-dark"><i class="bi bi-person-circle me-1"></i>{{ auth()->user()->nama_lengkap ?? auth()->user()->name ?? 'Admin' }}</span>
+        @php
+            $namaAdmin = auth()->user()->nama_lengkap ?? auth()->user()->name ?? 'Admin';
+            $roleAdmin = auth()->user()->role ?? 'admin';
+        @endphp
+        <div class="d-flex align-items-center gap-2">
+            <div class="admin-avatar">{{ strtoupper(substr($namaAdmin, 0, 1)) }}</div>
+            <div class="admin-name-block">
+                <div class="name">{{ $namaAdmin }}</div>
+                <div class="role-label">{{ $roleAdmin === 'admin' ? 'Super Admin' : ucfirst($roleAdmin) }} · SIMPEL PPKPI</div>
+            </div>
+        </div>
         <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
             @csrf
             <button type="submit" class="btn-nav-accent">Keluar</button>

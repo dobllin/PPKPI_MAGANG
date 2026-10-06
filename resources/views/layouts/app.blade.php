@@ -38,10 +38,25 @@
                     <a href="#about" class="font-semibold hover:underline decoration-2 underline-offset-4" style="color: #1a2a3a;">Tentang</a>
                 </div>
 
-                <!-- Auth Buttons -->
+                                <!-- Auth Buttons -->
                 <div class="flex items-center space-x-3">
-                    <a href="#" class="font-semibold" style="color: #1a2a3a;">Masuk</a>
-                    <a href="#" class="btn-retro text-sm py-2 px-4" style="box-shadow: 3px 3px 0 #1a2a3a;">Daftar →</a>
+                    @auth
+                        @if (auth()->user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}" class="font-semibold" style="color: #c8562f;">Dashboard Admin</a>
+                        @elseif (auth()->user()->role === 'instruktur')
+                            <a href="{{ route('instruktur.dashboard') }}" class="font-semibold" style="color: #c8562f;">Dashboard Instruktur</a>
+                        @endif
+
+                        <a href="{{ route('profile.index') }}" class="font-semibold" style="color: #1a2a3a;">{{ auth()->user()->nama_lengkap }}</a>
+
+                        <form action="{{ route('logout') }}" method="POST" class="m-0">
+                            @csrf
+                            <button type="submit" class="btn-retro text-sm py-2 px-4" style="box-shadow: 3px 3px 0 #1a2a3a;">Keluar</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="font-semibold" style="color: #1a2a3a;">Masuk</a>
+                        <a href="{{ route('register') }}" class="btn-retro text-sm py-2 px-4" style="box-shadow: 3px 3px 0 #1a2a3a;">Daftar →</a>
+                    @endauth
                 </div>
             </div>
         </div>

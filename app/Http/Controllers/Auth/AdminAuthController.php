@@ -49,6 +49,7 @@ class AdminAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.login');
+        // Setelah logout, balik ke halaman publik (nampilin tombol Masuk/Daftar)
+        return redirect()->route('dashboard');
     }
 }
